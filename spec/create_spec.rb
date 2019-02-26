@@ -4,7 +4,10 @@ describe 'creating bears table' do
     @sql_runner = SQLRunner.new(@db)
     @sql_runner.execute_create_file
   end
-
+  after do
+    File.open('lib/sql', 'w'){ |f| f.truncate(0) }
+  end
+  
   it "creates a bears table with a name field" do
     expect{@db.execute("SELECT name FROM bears;")}.to_not raise_exception
   end
